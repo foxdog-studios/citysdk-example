@@ -1,7 +1,7 @@
 <template name="layers">
-  <ul>
+  <select class="layer">
   {{#each layers}}
-    <li>{{name}}</li>
+    <option value="{{name}}">{{name}}</option>
   {{/each}}
-  </ul>
+  </select>
 </template>

@@ -1,0 +1,29 @@
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+#map {
+  position: absolute;
+  top: 0px;
+  left: 0px
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  z-index: -1;
+}
+
+#info {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 25%;
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+#nodeInfo {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+

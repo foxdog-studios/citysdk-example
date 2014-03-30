@@ -1,0 +1,2 @@
+BrowserPolicy.content.allowImageOrigin('*');
+

@@ -3,3 +3,13 @@ Template.layers.helpers({
     return Layers.find();
   }
 });
+
+Template.layers.events({
+  'change .layer': function (e) {
+    e.preventDefault();
+    var layerName = $(e.target).val();
+    console.log(layerName);
+    Session.set('currentLayerName', layerName);
+  }
+});
+
