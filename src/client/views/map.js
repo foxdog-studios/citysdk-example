@@ -1,5 +1,4 @@
 function onFeatureClick(e) {
-  console.log(e.target.feature.properties);
   Session.set('curremtFeature', e.target.feature.properties);
 }
 
@@ -39,7 +38,17 @@ Template.map.rendered = function() {
 
   Deps.autorun(function () {
     layer.clearLayers();
-    var nodes = Nodes.find({});
+    var layerKey = Session.get('currentLayerName');
+    if (!layerKey) {
+      return;
+    }
+    layerKey = layerKey.replace(/\./g, '\uff0e');
+    console.log(layerKey);
+    var query = {};
+    query['layers.' + layerKey] = {
+      $exists: true
+    };
+    var nodes = Nodes.find(query);
     nodes.forEach(function (node) {
       var geom;
       var feature = {
