@@ -27,5 +27,8 @@ body {
   position: absolute;
   top: 0px;
   right: 0px;
+  bottom: 0px;
+  width: 25%;
+  overflow-y: auto;
 }
 

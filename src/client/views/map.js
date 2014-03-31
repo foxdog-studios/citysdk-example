@@ -32,6 +32,12 @@ Template.map.rendered = function() {
     style: lineStyle,
     onEachFeature: onEachFeature,
     pointToLayer: function (feature, latlng) {
+      var pointStyle = {
+        radius: 5,
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.9
+      };
       return L.circleMarker(latlng, pointStyle);
     }
   }).addTo(map);
@@ -43,7 +49,6 @@ Template.map.rendered = function() {
       return;
     }
     layerKey = layerKey.replace(/\./g, '\uff0e');
-    console.log(layerKey);
     var query = {};
     query['layers.' + layerKey] = {
       $exists: true
