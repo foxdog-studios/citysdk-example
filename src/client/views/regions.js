@@ -2,12 +2,7 @@ function onRegionsReceived(error, result) {
   if (error) {
     console.error(error);
   }
-  content = JSON.parse(result.content);
-  regions = content.results;
-  _.each(regions, function (region) {
-    region._id = region.cdk_id;
-    Regions.upsert({_id: region._id}, region);
-  });
+  Meteor.call('upsertRegions', result);
 }
 
 Template.regions.created = function () {

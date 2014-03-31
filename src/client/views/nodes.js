@@ -3,29 +3,14 @@ function onNodesReceived(error, result) {
     console.error(error);
     return;
   }
-  content = JSON.parse(result.content);
-  nodes = content.results;
-  _.each(nodes, function (node) {
-    node._id = node.cdk_id;
-    for (var layerName in node.layers) {
-      if (node.layers.hasOwnProperty(layerName)) {
-        // Replace '.' with unicode equivalent fore mongodb
-        newLayerName = layerName.replace(/\./g, '\uff0e');
-        node.layers[newLayerName] = node.layers[layerName];
-        if (newLayerName !== layerName) {
-          delete node.layers[layerName];
-        }
-      }
-    }
-    Nodes.upsert({_id: node._id}, node);
-  });
+  Meteor.call('upsertNodes', result);
 }
 
 Template.nodes.created = function () {
   Deps.autorun(function () {
     var currentLayerName = Session.get('currentLayerName');
     if (currentLayerName) {
-      HTTP.get(ENDPOINT_URL + '/nodes/?layer=' + currentLayerName + '&geom',
+      HTTP.get(ENDPOINT_URL + '/nodes/?per_page=100&layer=' + currentLayerName + '&geom',
                onNodesReceived);
     }
   });

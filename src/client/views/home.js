@@ -4,16 +4,10 @@ function onLayersReceived(error, result) {
   if (error) {
     console.error(error);
   }
-  content = JSON.parse(result.content);
-  layers = content.results;
-  _.each(layers, function (layer) {
-    layer._id = layer.name;
-    Layers.upsert({_id: layer._id}, layer);
-  });
+  Meteor.call('upsertLayer', result);
 }
 
 Template.home.created = function() {
   HTTP.get(ENDPOINT_URL + '/layers/', onLayersReceived);
 }
-
 
