@@ -5,6 +5,7 @@ Template.nodeInfo.helpers({
     if (currentLayerName == 'fds.metoffice') {
       return Template.metOffice;
     }
+    return Template.selectALayer;
   },
   rawData: function () {
     var node = Session.get('curremtFeature');

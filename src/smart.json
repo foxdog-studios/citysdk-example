@@ -1,6 +1,7 @@
 {
   "packages": {
     "iron-router": {},
-    "leaflet": {}
+    "leaflet": {},
+    "spin": {}
   }
 }

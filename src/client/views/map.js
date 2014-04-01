@@ -52,14 +52,34 @@ Template.map.rendered = function() {
         stroke: false
       };
       metOffice = 'fds.metoffice'.replace(/\./g, '\uff0e');
+      var metOfficeIndex = parseInt(Session.get('metOfficeIndex'))
       if (feature.properties.layers[metOffice]) {
-        data = feature.properties.layers[metOffice].data.Period[0].Rep;
-        percipitationProb = parseInt(data[0].Pp);
-        var color;
+        var indexX = 0;
+        var indexY = 0;
+        var data = feature.properties.layers[metOffice].data.Period;
+        if (metOfficeIndex) {
+          var count = 0;
+          for (var i = 0; i < data.length; i++) {
+            var rep = data[i].Rep;
+            for (var j = 0; j < rep.length; j++) {
+              count ++;
+              if (count == metOfficeIndex) {
+                break;
+              }
+            }
+            if (count == metOfficeIndex) {
+              break;
+            }
+          }
+          indexX = i;
+          indexY = j;
+        }
+        data = data[indexX].Rep;
+        var percipitationProb = parseInt(data[indexY].Pp);
         // 100 is max
-        index = Math.floor((percipitationProb / 100)
+        var index = Math.floor((percipitationProb / 100)
                             * PRECPITATION_COLORS.length);
-        color = PRECPITATION_COLORS[index];
+        var color = PRECPITATION_COLORS[index];
         pointStyle.fillColor = color;
         pointStyle.color = color;
       }
@@ -70,6 +90,7 @@ Template.map.rendered = function() {
   Deps.autorun(function () {
     layer.clearLayers();
     var layerKey = Session.get('currentLayerName');
+    var metOfficeIndex = Session.get('metOfficeIndex');
     if (!layerKey) {
       return;
     }
@@ -95,13 +116,6 @@ Template.map.rendered = function() {
       feature.geometry = geom;
       layer.addData(feature);
     });
-    var bounds = layer.getBounds();
-    var southWest = bounds.getSouthWest();
-    var northEast = bounds.getNorthEast();
-    // XXX: Fitting bounds fail if there is nothing in the bounds.
-    if (northEast && southWest) {
-      //map.fitBounds(bounds);
-    }
   });
 }
 
