@@ -12,3 +12,21 @@ Template.layers.events({
   }
 });
 
+function onNodesReceived(error, result) {
+  if (error) {
+    console.error(error);
+    return;
+  }
+  Meteor.call('upsertNodes', result);
+}
+
+Template.layers.created = function () {
+  Deps.autorun(function () {
+    var currentLayerName = Session.get('currentLayerName');
+    if (currentLayerName) {
+      HTTP.get(ENDPOINT_URL + '/nodes/?per_page=100&layer=' + currentLayerName + '&geom',
+               onNodesReceived);
+    }
+  });
+};
+

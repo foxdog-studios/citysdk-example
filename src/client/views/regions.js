@@ -15,3 +15,10 @@ Template.regions.helpers({
   }
 });
 
+Template.regions.events({
+  'change .region': function(e) {
+    var regionId = $(e.target).val();
+    Session.set('regionId', regionId);
+  }
+});
+

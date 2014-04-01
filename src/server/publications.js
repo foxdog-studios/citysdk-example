@@ -1,4 +1,4 @@
-Meteor.publish('nodes', function(layerName) {
+Meteor.publish('nodes', function(layerName, regionId) {
   if (!layerName) {
     return;
   }

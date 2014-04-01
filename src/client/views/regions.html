@@ -1,9 +1,7 @@
 <template name="regions">
-  <ul>
+  <select class="region">
   {{#each regions}}
-    <li>
-      {{name}}
-    </li>
+    <option value="{{cdk_id}}">{{name}}</option>
   {{/each}}
-  </ul>
+  </select>
 </template>
